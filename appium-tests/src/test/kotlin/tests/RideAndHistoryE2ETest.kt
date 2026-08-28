@@ -56,12 +56,9 @@ class RideAndHistoryE2ETest : AppiumTestCase() {
         step("Open order history") {
             drawer.openOrders()
         }
-        step("Assert the completed ride is now the newest order") {
-            orders.assertNewOrderOnTop(
-                newOrderId = TestData.COMPLETED_ORDER_ID,
-                previousFirstOrderId = TestData.PREVIOUS_FIRST_ORDER_ID,
-                expectedRoute = TestData.COMPLETED_ORDER_ROUTE,
-            )
+        step("Assert the completed ride is the newest order") {
+            orders.assertHistoryRoutes(TestData.ROUTES_AFTER_COMPLETED_RIDE)
+            orders.assertOrderPrice(TestData.COMPLETED_ORDER_ID, TestData.YELLOW_PRICE_IN_HISTORY)
         }
     }
 }

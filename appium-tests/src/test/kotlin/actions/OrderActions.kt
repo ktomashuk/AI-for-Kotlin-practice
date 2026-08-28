@@ -2,7 +2,6 @@ package actions
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
 import pages.MapPage
 import pages.OrderHistoryPage
 
@@ -39,31 +38,6 @@ object OrderActions {
     fun assertOrderAbsent(orderId: Int) {
         OrderHistoryPage.title.waitFor(15)
         assertFalse(OrderHistoryPage.orderPrice(orderId).isPresent(), "order $orderId should be absent")
-    }
-
-    /**
-     * MOB-1006: a ride completed during the session must show up in history as the newest order.
-     *
-     * "Newest" is asserted by rendered position rather than by list index, because the screen
-     * exposes one test tag per order id and nothing that states the ordering. Comparing the y
-     * coordinates of the new row and the previously-first row checks what the user actually sees:
-     * a backend that appended instead of prepending would still render both rows, and only the
-     * position tells them apart.
-     */
-    fun assertNewOrderOnTop(
-        newOrderId: Int,
-        previousFirstOrderId: Int,
-        expectedRoute: String,
-    ) {
-        OrderHistoryPage.title.waitFor(15)
-        val newOrderRoute = OrderHistoryPage.orderRoute(newOrderId).waitFor(15)
-        val previousFirstRoute = OrderHistoryPage.orderRoute(previousFirstOrderId).waitFor(15)
-
-        assertEquals(expectedRoute, newOrderRoute.text, "route of the completed order $newOrderId")
-        assertTrue(
-            newOrderRoute.location.y < previousFirstRoute.location.y,
-            "order $newOrderId should render above order $previousFirstOrderId",
-        )
     }
 
     fun returnToRideForm() {
