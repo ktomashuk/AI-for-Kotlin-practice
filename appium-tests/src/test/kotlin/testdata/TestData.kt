@@ -67,12 +67,17 @@ object TestData {
     const val MINIVAN_RIDE_ID = 3
 
     // MOB-1006. Completing a ride prepends it to history: fake-api's RideStore issues order ids
-    // from 4 and is reset before every test, so the new row is always id 4 and the seeded order 1
-    // is the row it has to appear above. The route is rendered as "<from> → <to>", and the pickup
-    // defaults to PICKUP (LocationStore.DEFAULT_PICKUP) because the test never changes it.
+    // from 4 and is reset before every test, so the new row is always id 4. The route renders as
+    // "<from> → <to>", and the pickup defaults to PICKUP (LocationStore.DEFAULT_PICKUP) because
+    // the test never changes it.
     const val COMPLETED_ORDER_ID = 4
-    const val PREVIOUS_FIRST_ORDER_ID = 1
     const val COMPLETED_ORDER_ROUTE = "$PICKUP → $DESTINATION"
+
+    // The whole history after the ride completes: the new order plus the three seeded ones, which
+    // must still be there and unchanged - asserting only the new row would not catch a backend
+    // that replaced the history instead of prepending to it.
+    val ROUTES_AFTER_COMPLETED_RIDE =
+        mapOf(COMPLETED_ORDER_ID to COMPLETED_ORDER_ROUTE) + PAST_ORDER_ROUTES
 
     // The full tariff catalog on the map. Prices in the tilde form ("~29.70 €") -
     // currency STRINGS, same warning as YELLOW_PRICE_ON_MAP.
