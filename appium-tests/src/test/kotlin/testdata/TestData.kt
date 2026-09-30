@@ -71,6 +71,7 @@ object TestData {
     // "<from> → <to>", and the pickup defaults to PICKUP (LocationStore.DEFAULT_PICKUP) because
     // the test never changes it.
     const val COMPLETED_ORDER_ID = 4
+    const val PREVIOUS_FIRST_ORDER_ID = 1
     const val COMPLETED_ORDER_ROUTE = "$PICKUP → $DESTINATION"
 
     // The whole history after the ride completes: the new order plus the three seeded ones, which
