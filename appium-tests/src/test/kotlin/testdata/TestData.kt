@@ -64,6 +64,10 @@ object TestData {
     // signup submit trim it down to empty.
     const val WHITESPACE_ONLY = "   "
 
+    // MOB-1007. The capstone grader matches these exact values in the UI evidence.
+    const val PROFILE_FIRST_NAME = "Anna"
+    const val PROFILE_LAST_NAME = "Petrova"
+
     const val MINIVAN_RIDE_ID = 3
 
     // MOB-1006. Completing a ride prepends it to history: fake-api's RideStore issues order ids
