@@ -33,4 +33,32 @@ class RideAndHistoryE2ETest : AppiumTestCase() {
             orders.assertHistoryPrices(TestData.PAST_ORDERS)
         }
     }
+
+    @Test
+    @DisplayName("A completed ride becomes the newest order in history")
+    @AllureId("1006")
+    fun testCompletedRideBecomesNewestOrder() {
+        step("Start on the map (authorized)") {
+            map.awaitReady()
+        }
+        step("Search a destination") {
+            map.searchDestination(TestData.DESTINATION)
+        }
+        step("Order the Yellow tariff and wait for a driver") {
+            map.selectAndOrderRide(1)
+        }
+        step("Complete the ride") {
+            map.completeRide(TestData.YELLOW_PRICE_IN_HISTORY)
+        }
+        step("Return to the ride form") {
+            map.returnHomeAfterCompletion()
+        }
+        step("Open order history") {
+            drawer.openOrders()
+        }
+        step("Assert the completed ride is the newest order") {
+            orders.assertHistoryRoutes(TestData.ROUTES_AFTER_COMPLETED_RIDE)
+            orders.assertOrderPrice(TestData.COMPLETED_ORDER_ID, TestData.YELLOW_PRICE_IN_HISTORY)
+        }
+    }
 }

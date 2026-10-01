@@ -30,6 +30,18 @@ object TestData {
             3 to "Pine Street → River Road",
         )
 
+    // MOB-1006. Completing a ride prepends it to history: fake-api issues order ids from 4 and is
+    // reset before every test, so the new row is always id 4. The route renders as "<from> → <to>",
+    // and the pickup stays at PICKUP because this scenario never changes it.
+    const val COMPLETED_ORDER_ID = 4
+    const val COMPLETED_ORDER_ROUTE = "$PICKUP → $DESTINATION"
+
+    // The whole history after the ride completes - the new order plus the three seeded ones, which
+    // must still be present and unchanged. Asserting only the new row would not catch a backend
+    // that replaced the history instead of prepending to it.
+    val ROUTES_AFTER_COMPLETED_RIDE =
+        mapOf(COMPLETED_ORDER_ID to COMPLETED_ORDER_ROUTE) + PAST_ORDER_ROUTES
+
     // Driver signup (the classic View screen; strings from res/values/strings.xml).
     const val DRIVER_NAME = "Test Driver"
     const val DRIVER_CAR = "BG 123 AB"
